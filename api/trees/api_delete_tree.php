@@ -3,32 +3,22 @@
  * Created by PhpStorm.
  * User: mrdarky
  * Date: 8/3/16
- * Time: 7:30 PM
+ * Time: 8:18 PM
  */
 
 use Phalcon\Http\Response;
 
-function api_update_tree ($app, $id, $json_request) {
+function api_delete_tree ($app, $id) {
 
     $response = new Response();
     try {
         $bulk = new MongoDB\Driver\BulkWrite;
         $filter = ['_id' => new MongoDB\BSON\ObjectID($id)];
-        $data = array();
 
-        if ($json_request->title != null)
-        {
-            $data['title'] = $json_request->title;
-        }
-        if ($json_request->author != null)
-        {
-            $data['author'] = $json_request->author;
-        }
-
-        $bulk->update(['_id' => new MongoDB\BSON\ObjectID($id)], ['$set' => $data]);
+        $bulk->delete($filter);
         $app->mongo->executeBulkWrite('lab1.trees', $bulk);
 
-        $response->setStatusCode(201, "Update");
+        $response->setStatusCode(201, "Delete");
         $response->setJsonContent(
             array(
                 'status' => "OK"

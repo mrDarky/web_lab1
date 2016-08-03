@@ -34,7 +34,7 @@ function api_get_tree_with_id ($app, $id) {
         $response->setJsonContent(
             array(
                 'status' => 'DATABASE-ERROR',
-                'exception' => $e
+                'exception' => $e->getMessage()
             )
         );
     }

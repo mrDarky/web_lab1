@@ -43,20 +43,18 @@ try {
         return api_post_tree($app, $app->request->getJsonRawBody());
     });
 
-    $app->put('/trees/{id}', function ($id) {
-        echo 'ddededededdeeddeed';
+    $app->put('/trees/{id}', function ($id) use ($app) {
+        return api_update_tree($app, $id, $app->request->getJsonRawBody());
     });
 
-    $app->delete('/trees/{id}', function ($id) {
-        echo 'ddededededdeeddeed';
+    $app->delete('/trees/{id}', function ($id) use ($app) {
+        return api_delete_tree($app, $id);
     });
-
 
     $app->notFound(function () use ($app) {
         $app->response->setStatusCode(404, "Not Found")->sendHeaders();
         echo 'Not valid query!';
     });
-
 
     $app->handle();
 } catch (\Exception $e) {

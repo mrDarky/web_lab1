@@ -37,7 +37,7 @@ function api_get_trees ($app) {
         $response->setJsonContent(
             array(
                 'status' => 'ERROR',
-                'exception' => $e
+                'exception' => $e->getMessage()
             )
         );
     }

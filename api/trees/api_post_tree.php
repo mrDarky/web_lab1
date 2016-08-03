@@ -35,7 +35,7 @@ function api_post_tree ($app, $json_request) {
         $response->setJsonContent(
             array(
                 'status' => "ERROR",
-                'exception' => $e
+                'exception' => $e->getMessage()
             )
         );
     }
