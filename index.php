@@ -1,6 +1,5 @@
 <?php
 
-
 use Phalcon\Loader;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Micro;
