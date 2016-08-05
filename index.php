@@ -1,25 +1,19 @@
 <?php
 
-use Phalcon\Loader;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Micro;
 use Phalcon\Http\Response;
 
+$array_files[] = glob('api/*/*.php');
+$array_files[] = glob('models/*.php');
 
-$files = glob('api/trees/*.php');
-
-foreach ($files as $file) {
-    require_once($file);
+foreach ($array_files as $files) {
+    foreach ($files as $file) {
+        require_once($file);
+    }
 }
 
 try {
-    $loader = new Loader();
-    $loader->registerDirs(
-        array(
-            __DIR__ . '/models/'
-        )
-    ) -> register();
-
 
     $di = new FactoryDefault();
     $di->set('mongo', function (){
@@ -30,8 +24,12 @@ try {
     $app = new Micro();
     $app->setDI($di);
 
+    $app->get('/authorization', function () use ($app) {
+        api_get_authorization($app);
+    });
+
     $app->get('/trees', function () use ($app) {
-        return api_get_trees($app);
+        api_get_trees($app);
     });
 
     $app->get('/trees/{id}', function ($id) use ($app) {

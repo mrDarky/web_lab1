@@ -21,7 +21,7 @@ function api_delete_tree ($app, $id) {
         $response->setStatusCode(201, "Delete");
         $response->setJsonContent(
             array(
-                'status' => "OK"
+                'status' => "Deleted"
             )
         );
     } catch (MongoDB\Driver\Exception\Exception $e)

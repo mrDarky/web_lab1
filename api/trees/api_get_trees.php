@@ -22,6 +22,12 @@ function api_get_trees ($app) {
         } else {
             $data = array();
             foreach ($trees as $tree) {
+                if ($tree->title == null){
+                    $tree->title = "";
+                }
+                if ($tree->author == null){
+                    $tree->author = "";
+                }
                 $data[] = array(
                     'id' => (string)$tree->_id,
                     'title' => $tree->title,
@@ -30,7 +36,8 @@ function api_get_trees ($app) {
                 );
             }
             $response->setStatusCode(201, "OK");
-            $response->setJsonContent($data);
+            $response->setContentType('application/json', 'UTF-8');
+            $response->setContent(json_encode($data));
         }
     } catch (MongoDB\Driver\Exception\Exception $e) {
         $response->setStatusCode(409, "Conflict");
@@ -41,5 +48,6 @@ function api_get_trees ($app) {
             )
         );
     }
-    return $response;
+
+    return $response->send();
 }
