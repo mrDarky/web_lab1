@@ -21,15 +21,29 @@ function api_get_tree_with_id ($app, $id) {
                 )
             );
         } else {
-            $response->setJsonContent(
-                array(
-                    'id' => (string)$tree->_id,
-                    'title' => $tree->title,
-                    'author' => $tree->author,
-                    'counter' => $tree->counter
-                )
-            );
+            if (!isset($tree->owner)) {
+//                $bulk = new MongoDB\Driver\BulkWrite;
+//                $owner = [
+//                    'owner' => $user_token['_id']
+//                ];
+//                $bulk = update($tree['_id'], set($owner));
+                $response->setJsonContent(
+                    array(
+                        'identifier' => (string)$tree->_id,
+                        'title' => $tree->title,
+                        'author' => $tree->author,
+                        'counter' => $tree->counter
+                    )
+                );
+            } else {
+                $response->setJsonContent(
+                    array(
+                        'enable' => 'NO'
+                    )
+                );
+            }
         }
+
     } catch (MongoDB\Driver\Exception\Exception $e) {
         $response->setJsonContent(
             array(
@@ -38,5 +52,5 @@ function api_get_tree_with_id ($app, $id) {
             )
         );
     }
-    return $response;
+    return $response->send();
 }

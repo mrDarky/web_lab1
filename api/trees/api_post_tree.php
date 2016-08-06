@@ -25,8 +25,10 @@ function api_post_tree ($app, $json_request) {
         $response->setStatusCode(201, "Created");
         $response->setJsonContent(
             array(
-                'status' => "OK",
-                'id' => (string)$tree['_id']
+                'identifier' => (string)$tree['_id'],
+                'title' => $tree['title'],
+                'author' => $tree['author'],
+                'counter' => $tree['counter']
             )
         );
     } catch (MongoDB\Driver\Exception\Exception $e)
@@ -40,6 +42,6 @@ function api_post_tree ($app, $json_request) {
         );
     }
 
-    return $response;
+    return $response->send();
 
 }

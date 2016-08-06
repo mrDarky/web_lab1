@@ -8,7 +8,7 @@
 
 use Phalcon\Http\Response;
 
-function api_delete_tree ($app, $id) {
+function api_delete_human ($app, $id) {
 
     $response = new Response();
     try {
@@ -16,7 +16,7 @@ function api_delete_tree ($app, $id) {
         $filter = ['_id' => new MongoDB\BSON\ObjectID($id)];
 
         $bulk->delete($filter);
-        $app->mongo->executeBulkWrite('lab1.trees', $bulk);
+        $app->mongo->executeBulkWrite('lab1.humans', $bulk);
 
         $response->setStatusCode(201, "Delete");
         $response->setJsonContent(
@@ -36,5 +36,4 @@ function api_delete_tree ($app, $id) {
     }
 
     return $response->send();
-
 }

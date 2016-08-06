@@ -8,7 +8,7 @@
 
 use Phalcon\Http\Response;
 
-function api_update_tree ($app, $id, $json_request) {
+function api_update_human ($app, $id, $json_request) {
 
     $response = new Response();
     try {
@@ -16,17 +16,33 @@ function api_update_tree ($app, $id, $json_request) {
         $filter = ['_id' => new MongoDB\BSON\ObjectID($id)];
         $data = array();
 
-        if (isset($json_request->title))
+        if (isset($json_request->name))
         {
-            $data['title'] = $json_request->title;
+            $data['name'] = $json_request->name;
         }
-        if (isset($json_request->author))
+        if (isset($json_request->surname))
         {
-            $data['author'] = $json_request->author;
+            $data['surname'] = $json_request->surname;
+        }
+        if (isset($json_request->middlename))
+        {
+            $data['middlename'] = $json_request->middlename;
+        }
+        if (isset($json_request->father))
+        {
+            $data['father'] = $json_request->father;
+        }
+        if (isset($json_request->mother))
+        {
+            $data['mother'] = $json_request->mother;
+        }
+        if (isset($json_request->children))
+        {
+            $data['children'] = $json_request->children;
         }
 
         $bulk->update(['_id' => new MongoDB\BSON\ObjectID($id)], ['$set' => $data]);
-        $app->mongo->executeBulkWrite('lab1.trees', $bulk);
+        $app->mongo->executeBulkWrite('lab1.humans', $bulk);
 
         $response->setStatusCode(201, "Update");
         $response->setJsonContent(

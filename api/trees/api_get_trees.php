@@ -29,7 +29,7 @@ function api_get_trees ($app) {
                     $tree->author = "";
                 }
                 $data[] = array(
-                    'id' => (string)$tree->_id,
+                    'identifier' => (string)$tree->_id,
                     'title' => $tree->title,
                     'author' => $tree->author,
                     'counter' => $tree->counter
@@ -37,7 +37,7 @@ function api_get_trees ($app) {
             }
             $response->setStatusCode(201, "OK");
             $response->setContentType('application/json', 'UTF-8');
-            $response->setContent(json_encode($data));
+            $response->setJsonContent($data);
         }
     } catch (MongoDB\Driver\Exception\Exception $e) {
         $response->setStatusCode(409, "Conflict");
