@@ -28,8 +28,7 @@ function api_get_human_with_id ($app, $id) {
                     'surname' => $tree->surname,
                     'middlename' => $tree->middlename,
                     'father' => $tree->father,
-                    'mother' => $tree->mother,
-                    'children' => $tree->children
+                    'mother' => $tree->mother
                 )
             );
         }

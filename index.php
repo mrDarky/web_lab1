@@ -47,10 +47,6 @@ try {
     });
 
     $app->put('/trees/{id}', function ($id) use ($app) {
-        $file = 'log.txt';
-        $current = file_get_contents($file);
-        $current .= var_export(json_decode($app->request->getPut('jsonRequest')), true)."/n";
-        file_put_contents($file, $current);
         api_update_tree($app, $id, json_decode($app->request->getPut('jsonRequest')));
     });
 
@@ -72,7 +68,7 @@ try {
     });
 
     $app->put('/humans/{id}', function ($id) use ($app) {
-        api_update_human($app, $id, $app->request->getJsonRawBody());
+        api_update_human($app, $id, json_decode($app->request->getPut('jsonRequest')));
     });
 
     $app->delete('/humans/{id}', function ($id) use ($app) {

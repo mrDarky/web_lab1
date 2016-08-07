@@ -33,8 +33,7 @@ function api_post_human ($app, $treeId, $json_request) {
                 'gender' => 'male',
                 'father' => null,
                 'mother' => null,
-                'children' => null,
-                'treeId' => $treeId
+                'tree' => $treeId
             ];
             $bulk->insert($human);
             $app->mongo->executeBulkWrite('lab1.humans', $bulk);

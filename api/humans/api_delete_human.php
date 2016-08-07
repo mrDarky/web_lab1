@@ -13,7 +13,11 @@ function api_delete_human ($app, $id) {
     $response = new Response();
     try {
         $bulk = new MongoDB\Driver\BulkWrite;
-        $filter = ['_id' => new MongoDB\BSON\ObjectID($id)];
+        $filter = [
+            '_id' => new MongoDB\BSON\ObjectID($id),
+            'mother' => $id,
+            'father' => $id
+        ];
 
         $bulk->delete($filter);
         $app->mongo->executeBulkWrite('lab1.humans', $bulk);

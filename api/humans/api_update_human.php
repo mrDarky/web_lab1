@@ -13,15 +13,13 @@ function api_update_human ($app, $id, $json_request) {
     $response = new Response();
     try {
         $bulk = new MongoDB\Driver\BulkWrite;
-        $filter = ['_id' => new MongoDB\BSON\ObjectID($id)];
         $data = array();
 
         if (isset($json_request->name))
         {
             $data['name'] = $json_request->name;
         }
-        if (isset($json_request->surname))
-        {
+        if (isset($json_request->surname)) {
             $data['surname'] = $json_request->surname;
         }
         if (isset($json_request->middlename))
@@ -36,20 +34,16 @@ function api_update_human ($app, $id, $json_request) {
         {
             $data['mother'] = $json_request->mother;
         }
-        if (isset($json_request->children))
+        if (isset($json_request->gender))
         {
-            $data['children'] = $json_request->children;
+            $data['gender'] = $json_request->gender;
         }
-
         $bulk->update(['_id' => new MongoDB\BSON\ObjectID($id)], ['$set' => $data]);
         $app->mongo->executeBulkWrite('lab1.humans', $bulk);
 
         $response->setStatusCode(201, "Update");
-        $response->setJsonContent(
-            array(
-                'status' => "OK"
-            )
-        );
+        $data['status'] = "OK";
+        $response->setJsonContent($data);
     } catch (MongoDB\Driver\Exception\Exception $e)
     {
         $response->setStatusCode(409, "Conflict");

@@ -13,7 +13,6 @@ function api_update_tree ($app, $id, $json_request) {
     $response = new Response();
     try {
         $bulk = new MongoDB\Driver\BulkWrite;
-        $filter = ['_id' => new MongoDB\BSON\ObjectID($id)];
         $data = array();
 
         if (isset($json_request->title))

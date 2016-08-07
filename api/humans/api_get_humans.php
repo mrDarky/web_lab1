@@ -11,7 +11,7 @@ function api_get_humans ($app, $treeId) {
     $response = new Response();
     try {
         $query = new MongoDB\Driver\Query([
-            'treeId' => $treeId
+            'tree' => $treeId
         ]);
         $humans = $app->mongo->executeQuery("lab1.humans", $query);
 
@@ -24,24 +24,6 @@ function api_get_humans ($app, $treeId) {
         } else {
             $data = array();
             foreach ($humans as $human) {
-//                if ($human->name == null){
-//                    $human->name = null;
-//                }
-//                if ($human->surname == null){
-//                    $human->surname = null;
-//                }
-//                if ($human->middlename == null){
-//                    $human->middlename = null;
-//                }
-                if ($human->father == null){
-                    $human->father = null;
-                }
-                if ($human->mother == null){
-                    $human->mother = null;
-                }
-                if ($human->children == null){
-                    $human->children = null;
-                }
                 $data[] = array(
                     'identifier' => (string)$human->_id,
                     'name' => $human->name,
@@ -49,8 +31,7 @@ function api_get_humans ($app, $treeId) {
                     'middlename' => $human->middlename,
                     'gender' => $human->gender,
                     'father' => $human->father,
-                    'mother' => $human->mother,
-                    'children' => $human->children
+                    'mother' => $human->mother
                 );
             }
 
